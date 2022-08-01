@@ -1,0 +1,161 @@
+<body>
+  <mat-grid-list cols="4" rowHeight="400px">
+    <mat-grid-tile colspan="1" class="pp-label">
+      <h1>Create New ORTF Request:</h1>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="3" class="pp-form">
+      <form [formGroup]="clientForm" (ngSubmit)="addRequest($event)">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Select Client</mat-label>
+          <input type="text" matInput formControlName="clientName" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let client of filteredOptions | async" [value]="client.name">
+              {{client.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>        
+
+        <mat-divider></mat-divider>
+
+        <div>
+          <label id="ortf-direction-radio-group-label">ORTF Direction</label>
+        </div>
+        <mat-radio-group formControlName="ortfDirection" required aria-labelledby="ortf-direction-radio-group-label" class="pp-direction">
+          <mat-radio-button value="Incoming">Incoming</mat-radio-button>
+          <mat-radio-button value="Outgoing">Outgoing</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-divider></mat-divider>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Implementation Date</mat-label>
+          <input matInput formControlName="implementationDate" [matDatepicker]="picker" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>    
+
+        <mat-divider></mat-divider>  
+
+        <div>
+          <mat-label>Select ORTF File</mat-label>
+          <mat-toolbar>
+            <button
+              type="button"
+              mat-flat-button
+              color="primary"
+              (click)="fileInput.click()"
+            >
+              Browse File
+            </button>
+          </mat-toolbar>
+
+          <!-- Fetch selected filed on change -->
+          <input
+            formControlName="ortfFile"
+            hidden
+            type="file"
+            #fileInput
+            id="uploadFile"
+            (change)="uploadFileEvt($event)"
+            name="uploadFile"
+            multiple
+            accept="image/*"
+          />    
+        </div>    
+
+        <mat-divider></mat-divider>                                                                          
+
+        <mat-radio-group formControlName="ortfFileType" required>
+          <mat-radio-button value="Test">Test</mat-radio-button>
+          <mat-radio-button value="Production">Production</mat-radio-button>
+          <mat-radio-button value="Lag">Lag</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-divider></mat-divider>
+
+
+        
+        <button
+          [disabled]="clientForm.invalid"
+          type="submit"
+          mat-raised-button
+          color="primary"
+        >
+          Create
+        </button>
+      </form>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4" class="pp-table">
+      <h1>Existing ORTF Requests:</h1>
+
+      <div>
+        <label id="ortf-direction-radio-group-label">ORTF Status</label>
+      </div>
+      <mat-radio-group (change)="handleOrtfStatusFilter($event)">
+        <mat-radio-button value="Incomplete">Incomplete</mat-radio-button>
+        <mat-radio-button value="Complete">Complete</mat-radio-button>
+      </mat-radio-group>      
+
+      <table mat-table [dataSource]="existingRequests"> 
+        <!-- Client Name Column -->
+        <ng-container matColumnDef="clientName">
+          <th mat-header-cell *matHeaderCellDef> Client Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.clientName}} </td>
+        </ng-container>
+
+        <!-- ORT Direction Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> ORTF Direction </th>
+          <td mat-cell *matCellDef="let element"> {{element.ortfDirection}} </td>
+        </ng-container>
+
+        <!-- ORTF Implementation date Column -->
+        <ng-container matColumnDef="implementationDate">
+          <th mat-header-cell *matHeaderCellDef> Implementation Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.implementationDate}} </td>
+        </ng-container>        
+
+        <!-- File Name Column -->
+        <ng-container matColumnDef="filename">
+          <th mat-header-cell *matHeaderCellDef> File Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.file.filename}} </td>
+        </ng-container>
+
+        <!-- Type Column -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef> Type </th>
+          <td mat-cell *matCellDef="let element"> {{element.file.type}} </td>
+        </ng-container>
+
+         <!-- Status Column -->
+         <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+
+        <!-- Last Modified User Column -->
+        <ng-container matColumnDef="lastModUser">
+         <th mat-header-cell *matHeaderCellDef> Last Modified User </th>
+         <td mat-cell *matCellDef="let element"> TODO </td>
+        </ng-container>
+
+        <!-- Last Modified Date Column -->
+        <ng-container matColumnDef="lastModDate">
+          <th mat-header-cell *matHeaderCellDef> Last Modified Date </th>
+          <td mat-cell *matCellDef="let element"> TODO </td>
+        </ng-container>
+
+        <!-- Open Button Column -->
+        <ng-container matColumnDef="open">
+          <th mat-header-cell *matHeaderCellDef> Open File </th>
+          <td mat-cell *matCellDef="let element"> <button mat-raised-button color="primary">Open</button> </td>
+        </ng-container>
+        
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-grid-tile>
+  </mat-grid-list>
+</body>
