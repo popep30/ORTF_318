@@ -6,6 +6,11 @@ export interface OrtfRequest {
     status: string;
 }
 
+export interface ORTFClient {
+    id: string;
+    name: string;
+}
+
 export enum OrtfDirection {
     Incoming = "Incoming",
     Outgoing = "Outgoing"

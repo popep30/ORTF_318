@@ -1,8 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatRadioChange } from "@angular/material/radio";
-import { Observable, startWith, map } from "rxjs";
-import { OrtfRequest } from "./shared/services/ortf/ortf.model";
+import { Observable, map, startWith } from "rxjs";
+import { OrtfRequest, ORTFClient } from "./shared/services/ortf/ortf.model";
 import { OrtfService } from "./shared/services/ortf/ortf.service";
 
 @Component({
@@ -15,20 +15,7 @@ export class AppComponent implements OnInit {
 
   selectedClient: number;
 
-  clients = [
-    { id: 1, name: "Client 1" },
-    { id: 2, name: "Client 2" },
-    { id: 3, name: "Client 3" },
-    { id: 4, name: "Client 4" },
-    { id: 1, name: "Client 5" },
-    { id: 2, name: "Client 6" },
-    { id: 3, name: "Client 7" },
-    { id: 4, name: "Client 8" },
-    { id: 1, name: "Client 9" },
-    { id: 2, name: "Client 10" },
-    { id: 3, name: "Client 11" },
-    { id: 4, name: "Client 12" },
-  ];
+  clients: ORTFClient[];
 
   @ViewChild("fileInput") fileInput: ElementRef;
   fileAttr = "Choose File";
@@ -53,6 +40,11 @@ export class AppComponent implements OnInit {
   constructor(private ortfService: OrtfService) {}
 
   ngOnInit() {
+    this.ortfService.getClients().
+  subscribe(res => {
+    this.clients = res;
+//    return res;
+  });
     this.clientForm = new FormGroup({
       clientName: new FormControl("", [Validators.required]),
       ortfDirection: new FormControl("", [Validators.required]),
@@ -61,10 +53,14 @@ export class AppComponent implements OnInit {
       ortfFile: new FormControl("", [Validators.required]),
     });
 
-    this.filteredOptions = this.clientForm.get("clientName")!.valueChanges.pipe(
+    
+
+    if (this.clientForm !=null && this.clientForm.get("clientName")!=null){
+    this.filteredOptions = this?.clientForm?.get("clientName")?.valueChanges?.pipe(
       startWith(""),
-      map((value) => this._filter(value))
-    );
+      map((value:ORTFClient) => this._filter(value.name))
+    ) || this.filteredOptions;
+    }
   }
 
   addRequest(event: Event) {
@@ -125,8 +121,9 @@ export class AppComponent implements OnInit {
   private _filter(value: string): any[] {
     if (value) {
       const filterValue = value.toLowerCase();
-      return this.clients.filter((client) =>
-        client.name.toLowerCase().includes(filterValue)
+      return this.clients.filter((client) =>{
+        if(client.name) {client.name.toLowerCase().includes(filterValue)}
+      }
       );
     }
     return [];

@@ -48,6 +48,12 @@ export class OrtfService {
 
   }
 
+  getClients(): Observable<any> {
+    
+    return this.http.get<any>(`http://localhost:5000/`);
+
+  }
+
 
 
   upload(url:string,file:File): Observable<any>{

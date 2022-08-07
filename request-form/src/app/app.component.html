@@ -6,16 +6,9 @@
 
     <mat-grid-tile colspan="3" class="pp-form">
       <form [formGroup]="clientForm" (ngSubmit)="addRequest($event)">
-        <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>Select Client</mat-label>
-          <input type="text" matInput formControlName="clientName" [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let client of filteredOptions | async" [value]="client.name">
-              {{client.name}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>        
-
+        <select name="" id="" style="position:relative; left: 100px">
+            <option *ngFor="let i of clients;" value="{{i.name}}" [selected]="">{{ i.name }}</option>
+        </select>
         <mat-divider></mat-divider>
 
         <div>
