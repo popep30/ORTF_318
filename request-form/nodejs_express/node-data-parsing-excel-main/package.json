@@ -1,0 +1,20 @@
+{
+  "name": "FileParser",
+  "version": "0.0.1",
+  "main": "main.js",
+  "repository": "https://github.com/perice-pope/node-data-parsing-excel",
+  "author": "Mayowa Falade <falademayowa240@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1111.0",
+    "dotenv": "^16.0.0",
+    "exceljs": "^4.3.0",
+    "lodash.startcase": "^4.4.0"
+  }
+}
