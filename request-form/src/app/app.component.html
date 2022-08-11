@@ -125,13 +125,12 @@
         <label id="ortf-direction-radio-group-label">ORTF Status</label>
       </div>
       <mat-radio-group (change)="handleOrtfStatusFilter($event)">
-        <mat-radio-button value="Incomplete">Incomplete</mat-radio-button>
-        <mat-radio-button value="Complete">Complete</mat-radio-button>
+        <mat-radio-button *ngFor="let orftRequestStatus of ortfRequestStatuses" value="{{orftRequestStatus.id}}">{{orftRequestStatus.statusName}}</mat-radio-button>
       </mat-radio-group>      
 
       <table mat-table [dataSource]="existingRequests"> 
         <!-- Client Name Column -->
-        <ng-container matColumnDef="clientName">
+        <ng-container matColumnDef="clientName"> 
           <th mat-header-cell *matHeaderCellDef> Client Name </th>
           <td mat-cell *matCellDef="let element"> {{element.clientName}} </td>
         </ng-container>

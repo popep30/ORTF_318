@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatRadioChange } from "@angular/material/radio";
 import { Observable, map, startWith } from "rxjs";
-import { OrtfRequest, ORTFClient } from "./shared/services/ortf/ortf.model";
+import { OrtfRequest, ORTFClient, ORTFRequestStatus } from "./shared/services/ortf/ortf.model";
 import { OrtfService } from "./shared/services/ortf/ortf.service";
 
 @Component({
@@ -16,6 +16,8 @@ export class AppComponent implements OnInit {
   selectedClient: number;
 
   clients: ORTFClient[];
+
+  ortfRequestStatuses: ORTFRequestStatus[]
 
   @ViewChild("fileInput") fileInput: ElementRef;
   fileAttr = "Choose File";
@@ -44,6 +46,11 @@ export class AppComponent implements OnInit {
     this.ortfService.getClients().
       subscribe(res => {
         this.clients = res;
+        //    return res;
+      });
+      this.ortfService.getOrtfRequest().
+      subscribe(res => {
+        this.ortfRequestStatuses = res;
         //    return res;
       });
     this.clientForm = new FormGroup({

@@ -49,7 +49,10 @@ export class OrtfService {
   getClients(): Observable<any> {
     return this.http.get<any>(`http://localhost:5000/`);
   }
-
+  getOrtfRequest(): Observable<any> {
+    return this.http.get<any>(`http://localhost:5000/ortf-request-status`);
+  }
+  
   upload(url:string,file:File): Observable<any>{
     return this.http.put<any>(url,file);
   }
