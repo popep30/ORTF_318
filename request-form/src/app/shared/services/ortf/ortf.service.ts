@@ -42,24 +42,19 @@ export class OrtfService {
     return of(this.mockData);
   }
 
-  getUploadUrl(model: any): Observable<any> {
-    
-    return this.http.post<any>(`https://q7w3dg24tk.execute-api.us-east-1.amazonaws.com/dev/upload`, {fileName:model});
-
+  getUploadUrl(model: any, isParsedFile: boolean): Observable<any> {
+    return this.http.post<any>(`https://q7w3dg24tk.execute-api.us-east-1.amazonaws.com/dev/upload`, {fileName:model, isParsedFile});
   }
 
   getClients(): Observable<any> {
-    
     return this.http.get<any>(`http://localhost:5000/`);
-
   }
-
-
 
   upload(url:string,file:File): Observable<any>{
-
-    console.log(file);
     return this.http.put<any>(url,file);
-
   }
+
+  /*saveToDB(): Observable<any>{
+    // call API route to persist to DB
+  }  */
 }

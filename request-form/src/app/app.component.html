@@ -1,12 +1,12 @@
 <body>
-  <mat-grid-list cols="4" rowHeight="400px">
+  <mat-grid-list cols="4" rowHeight="500px">
     <mat-grid-tile colspan="1" class="pp-label">
       <h1>Create New ORTF Request:</h1>
     </mat-grid-tile>
 
     <mat-grid-tile colspan="3" class="pp-form">
       <form [formGroup]="clientForm" (ngSubmit)="addRequest($event)">
-        <select name="" id="" style="position:relative; left: 100px">
+        <select formControlName="clientName" name="" id="" style="position:relative; left: 100px">
             <option *ngFor="let i of clients;" value="{{i.name}}" [selected]="">{{ i.name }}</option>
         </select>
         <mat-divider></mat-divider>
@@ -53,11 +53,43 @@
             (change)="uploadFileEvt($event)"
             name="uploadFile"
             multiple
-            accept="image/*"
+            accept="*"
           />    
         </div>    
 
-        <mat-divider></mat-divider>                                                                          
+        <mat-divider></mat-divider>   
+        
+        
+
+        <!-- <div>
+          <mat-label>Select Parsed File</mat-label>
+          <mat-toolbar>
+            <button
+              type="button"
+              mat-flat-button
+              color="primary"
+              (click)="fileInput2.click()"
+            >
+              Browse File
+            </button>
+          </mat-toolbar>
+
+          
+          <input
+            formControlName="parsedFile"
+            hidden
+            type="file"
+            #fileInput2
+            id="uploadFile2"
+            (change)="uploadFileEvt2($event)"
+            name="uploadFile2"
+            multiple
+            accept="*"
+          />    
+        </div>    
+
+        <mat-divider></mat-divider>  -->
+
 
         <mat-radio-group formControlName="ortfFileType" required>
           <mat-radio-button value="Test">Test</mat-radio-button>
@@ -79,6 +111,13 @@
         </button>
       </form>
     </mat-grid-tile>
+
+
+
+
+
+
+
     <mat-grid-tile colspan="4" class="pp-table">
       <h1>Existing ORTF Requests:</h1>
 

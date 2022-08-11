@@ -1,26 +1,19 @@
 const aws = require('aws-sdk');
-const { readFileContent } = require('../lib');
+const fs = require('fs');
 
-const writeFileToS3Bucket = (fileName) => {
-  const s3 = new aws.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  });
+const writeFileToS3Bucket = (fileName, key) => {
+  const s3 = new aws.S3();
 
   // Setting up S3 upload parameters
   const params = {
     Bucket: process.env.AWS_S3_BUCKET_NAME,
-    Key: fileName,
-    Body: readFileContent(fileName),
+    Key: key,
+    Body: fs.readFileSync(fileName)
   };
+  console.log('params==>>', params);
 
   // Uploading files to the bucket
-  s3.upload(params, (err, data) => {
-    if (err) {
-      throw err;
-    }
-    console.log(`[INFO]: File uploaded successfully. ${data.Location}`);
-  });
+  return s3.upload(params).promise();
 };
 
 module.exports = {
