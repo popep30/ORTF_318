@@ -1,5 +1,10 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
+var jsonParser = bodyParser.json()
+
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 var cors = require('cors');
 const mysql = require('mysql')
 const mysql_connection = mysql.createConnection(
@@ -28,18 +33,19 @@ corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.post('/save-to-db', (rq, res) => {
+app.post('/save-to-db',urlencodedParser, (req, res) => {
     // save to mysql/aurora DB
-let ortfRequestID = req.body["ORTFRequestID"] == undefined ? null : req.body["ORTFRequestID"];
-let clientName = req.body["ClientName"] == undefined ? '' : req.body["ClientName"];
-let ortfDirectionID = req.body["ORTFDirectionID"] == undefined ? null : req.body["ORTFDirectionID"];
-let ortfTypeID = req.body["ORTFTypeID"] == undefined ? null : req.body["ORTFTypeID"];
-let requestedDate = req.body["RequestedDate"] == undefined ? '' : req.body["RequestedDate"];
-let jiraTicket = req.body["JIRATicket"] == undefined ? '' : req.body["JIRATicket"];
-let createUser = req.body["CreateUser"] == undefined ? '' : req.body["CreateUser"];
-let createDateTime = req.body["CreateDateTime"] == undefined ? '' : req.body["CreateDateTime"];
+    console.log("req.body",req.body)
+let ortfRequestID = req.body.ORTFRequestID == undefined ? null : req.body.ORTFRequestID;
+let clientName = req.body.ClientName == undefined ? '' : req.body.ClientName;
+let ortfDirectionID = req.body.ORTFDirectionID == undefined ? null : req.body.ORTFDirectionID;
+let ortfTypeID = req.body.ORTFTypeID == undefined ? null : req.body.ORTFTypeID;
+let requestedDate = req.body.RequestedDate == undefined ? '' : req.body.RequestedDate;
+let jiraTicket = req.body.JIRATicket == undefined ? '' : req.body.JIRATicket;
+let createUser = req.body.CreateUser == undefined ? '' : req.body.CreateUser;
+let createDateTime = req.body.CreateDateTime == undefined ? '' : req.body.CreateDateTime;
 
-    mysql_connection.query(`INSERT INTO 'fusion'.'ortf_request' ('ORTFRequestID', 'ClientName', 'ORTFDirectionID', 'ORTFTypeID', 'RequestedDate', 'JIRATicket', 'CreateUser', 'CreateDateTime') VALUES (${ortfRequestID}, ${clientName}, ${ortfDirectionID}, ${ortfTypeID}, ${requestedDate}, ${jiraTicket}, ${createUser}, ${createDateTime})`, (err, rows, fields) => {
+    mysql_connection.query(`INSERT INTO fusion.ortf_request (ORTFRequestID, ClientName, ORTFDirectionID, ORTFTypeID, RequestedDate, JIRATicket, CreateUser, CreateDateTime) VALUES ("${ortfRequestID}", "${clientName}", "${ortfDirectionID}", "${ortfTypeID}", "${requestedDate}", "${jiraTicket}", "${createUser}", "${createDateTime}")`, (err, rows, fields) => {
         if (err){
             console.error('issue while selectiong rows from fusion', err);
             return;
