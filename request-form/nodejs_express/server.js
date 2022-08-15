@@ -44,6 +44,7 @@ app.post('/save-to-db', (req, res) => {
     let jiraTicket = req.body.JIRATicket == undefined ? '' : req.body.JIRATicket;
     let createUser = req.body.CreateUser == undefined ? '' : req.body.CreateUser;
     let createDateTime = req.body.CreateDateTime == undefined ? '' : req.body.CreateDateTime;
+    console.log("Am I even receiving the newFlag properly?", req.body.newFlag);
     let newFlag = req.body.newFlag == undefined ? false : true;
     console.log("save-to-db", clientName);
 
@@ -134,7 +135,7 @@ app.get('/', function (req, res) {
                     res.send(list1);
                     return;
                 }
-                list1 = list1.concat(rows);
+                list1 = list1 == undefined ? list1 : list1.concat(rows);
                 res.send(list1);
             });
         });

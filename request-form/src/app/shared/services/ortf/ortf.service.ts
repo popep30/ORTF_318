@@ -64,7 +64,7 @@ export class OrtfService {
 
   saveToDB(clientName: string, ortfDirectionID: number, ortfTypeID: number, requestedDate: string, jiraTicket: string, new_flag: boolean): Observable<any>{
     // call API route to persist to DB
-    console.log("saveToDB222", clientName, ortfDirectionID);
+    console.log("saveToDB ORTF Service", clientName, ortfDirectionID);
     return this.http.post<any>(`http://localhost:5000/save-to-db`, {
       ClientName: clientName, ORTFDirectionID : ortfDirectionID, 
       ORTFTypeID: ortfTypeID, RequestedDate:requestedDate, 

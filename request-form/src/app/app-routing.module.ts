@@ -5,7 +5,7 @@ import { OtrfRequestsComponent } from './otrf-requests/otrf-requests.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'otrfrequests/:clientName', component: OtrfRequestsComponent }
+  { path: 'ortfrequests/:clientName', component: OtrfRequestsComponent }
 ];
 
 @NgModule({

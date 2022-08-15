@@ -135,10 +135,14 @@ export class HomeComponent implements OnInit  {
         const ortfDirectionID = Number(newRecord.ortfDirection);
         const ortfTypeID = Number(newRecord.ortfType);
         const requestedDate = newRecord.implementationDate;
-        console.log("saveToDB111", newRecord);
-
-        const new_flag = this.clients.findIndex(row => row.name == newRecord.clientName) < 0;
-
+        console.log("saveToDB TS Home", newRecord);
+let new_flag = true;
+        this.clients.map(client => {if (client.name == newRecord.clientName){
+          new_flag = false;
+          //break;
+        } })
+//        const new_flag = (this.clients.filter(row => {console.log("lging here", row, " newRecord", newRecord); return (row.name === newRecord.clientNam)}).length < 1);
+console.log("here is the result", new_flag)
         // let me send new zoom link
         this.ortfService.saveToDB(newRecord.clientName, ortfDirectionID, ortfTypeID, requestedDate, newRecord.jiraTicket, new_flag)
           .subscribe(res => {
@@ -157,7 +161,8 @@ export class HomeComponent implements OnInit  {
   }
 
   navigateToOrtfRequests(clientName: string) {
-    this.router.navigate([`/ortfrequests/${clientName}`]);
+    let urlClientName = encodeURI(clientName);
+    this.router.navigate([`/ortfrequests/${urlClientName}`]);
   }
 
   uploadFileEvt(event: Event): void {
