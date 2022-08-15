@@ -113,7 +113,7 @@ export class HomeComponent implements OnInit  {
   addRequest(event: Event) {
     const { ortfFile, ortfFileType, implementationDate, ...newRecord } = this.clientForm.value;
     newRecord.status = '1';
-    newRecord.lastModDate = new Date().toISOString().split('T')[0];
+    newRecord.lastModDate = new Date(); //.toISOString().split('T')[0];
     newRecord.implementationDate = implementationDate.toISOString().slice(0, 10);
     newRecord.file = {
       filename: ortfFile.split("\\").slice(-1)[0],

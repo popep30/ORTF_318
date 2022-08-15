@@ -43,21 +43,31 @@ app.post('/save-to-db', (req, res) => {
     let requestedDate = req.body.RequestedDate == undefined ? '' : req.body.RequestedDate;
     let jiraTicket = req.body.JIRATicket == undefined ? '' : req.body.JIRATicket;
     let createUser = req.body.CreateUser == undefined ? '' : req.body.CreateUser;
-    let createDateTime = req.body.CreateDateTime == undefined ? '' : req.body.CreateDateTime;
+    let createDateTime = new Date().getTime(); //req.body.lastModifiedDate == undefined ? '' : req.body.lastModifiedDate;
     console.log("Am I even receiving the newFlag properly?", req.body.newFlag);
     let newFlag = req.body.newFlag == undefined ? false : true;
     console.log("save-to-db", clientName);
 
     if (newFlag) {
-        mysql_connection.query(`INSERT INTO fusion.ortf_clients (ClientName) VALUES ('${clientName}')`, (err, rows, fields) => {
+        mysql_connection.query(`SELECT * FROM fusion.ortf_clients WHERE ClientName = '${clientName}'`, (err, rows, fields) => {
             if (err) {
                 console.error('issue while selectiong rows from fusion', err);
                 return;
             }
+
+            if (!rows.length) {
+                mysql_connection.query(`INSERT INTO fusion.ortf_clients (ClientName) VALUES ('${clientName}')`, (err, rows, fields) => {
+                    if (err) {
+                        console.error('issue while selectiong rows from fusion', err);
+                        return;
+                    }
+                }); 
+            }
+
         });
     }
 
-    mysql_connection.query(`INSERT INTO fusion.ortf_request (ClientName, ORTFDirectionID, ORTFTypeID, RequestedDate, JIRATicket, CreateUser, CreateDateTime) VALUES ('${clientName}', '${ortfDirectionID}', '${ortfTypeID}', '${requestedDate}', '${jiraTicket}', '${createUser}', '${createDateTime}')`, (err, rows, fields) => {
+    mysql_connection.query(`INSERT INTO fusion.ortf_request (ClientName, ORTFDirectionID, ORTFTypeID, RequestedDate, JIRATicket, CreateUser, CreateDateTime) VALUES ('${clientName}', '${ortfDirectionID}', '${ortfTypeID}', '${requestedDate}', '${jiraTicket}', '${createUser}', NOW())`, (err, rows, fields) => {
         if (err) {
             console.error('issue while selectiong rows from fusion', err);
             return;

@@ -10,6 +10,7 @@ import { OrtfService } from '../shared/services/ortf/ortf.service';
 export class OtrfRequestsComponent implements OnInit {
   clientName: string | null;
   ortfRequests: any;
+  displayedColumns = ['ClientName', 'implementationDate', 'ORTFRequestStatus', 'ORTFTypeID', 'ORTFDirectionID', 'JIRATicket', 'lastModifiedUser', 'lastModifiedDate']
 
   constructor(private activatedRoute: ActivatedRoute, private ortfService: OrtfService) { }
 
@@ -18,11 +19,11 @@ export class OtrfRequestsComponent implements OnInit {
       this.clientName = params.get('clientName');
       if (this.clientName) {
         this.ortfService.getOrtfRequestByClientName(this.clientName).subscribe((res) => {
+          res = res.map((r: any) => ({ ...r, implementationDate: r.RequestedDate, ORTFRequestStatus: null, lastModifiedUser: null, lastModifiedDate: r.CreateDateTime }));
           this.ortfRequests = res;
           console.log(res);
         });
       }
     });
   }
-
 }

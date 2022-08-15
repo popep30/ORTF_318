@@ -1,1 +1,48 @@
-<p>otrf-requests works!</p>
+<div>
+    <h1>ORTF Requests</h1>
+
+    <table mat-table [dataSource]="ortfRequests">
+        <ng-container matColumnDef="ClientName">
+            <th mat-header-cell *matHeaderCellDef>Client Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.ClientName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="implementationDate">
+            <th mat-header-cell *matHeaderCellDef> Implementation Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.implementationDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ORTFRequestStatus">
+            <th mat-header-cell *matHeaderCellDef> ORTF Request Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.ORTFRequestStatus}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ORTFTypeID">
+            <th mat-header-cell *matHeaderCellDef> ORTF Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.ORTFTypeID}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ORTFDirectionID">
+            <th mat-header-cell *matHeaderCellDef> ORTF Direction </th>
+            <td mat-cell *matCellDef="let element"> {{element.ORTFDirectionID}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="JIRATicket">
+            <th mat-header-cell *matHeaderCellDef> JIRA Ticket </th>
+            <td mat-cell *matCellDef="let element"> {{element.JIRATicket}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastModifiedUser">
+            <th mat-header-cell *matHeaderCellDef> Last Modified User </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastModifiedUser}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastModifiedDate">
+            <th mat-header-cell *matHeaderCellDef> Last Modified Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.lastModifiedDate}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
