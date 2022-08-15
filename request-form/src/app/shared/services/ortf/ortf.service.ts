@@ -49,15 +49,27 @@ export class OrtfService {
   getClients(): Observable<any> {
     return this.http.get<any>(`http://localhost:5000/`);
   }
+
   getOrtfRequest(): Observable<any> {
     return this.http.get<any>(`http://localhost:5000/ortf-request-status`);
+  }
+
+  getOrtfRequestByClientName(clientName: string): Observable<any> {
+    return this.http.get<any>(`http://localhost:5000/ortf-request/${clientName}`);
   }
   
   upload(url:string,file:File): Observable<any>{
     return this.http.put<any>(url,file);
   }
 
-  /*saveToDB(): Observable<any>{
+  saveToDB(clientName: string, ortfDirectionID: number, ortfTypeID: number, requestedDate: string, jiraTicket: string, new_flag: boolean): Observable<any>{
     // call API route to persist to DB
-  }  */
+    console.log("saveToDB222", clientName, ortfDirectionID);
+    return this.http.post<any>(`http://localhost:5000/save-to-db`, {
+      ClientName: clientName, ORTFDirectionID : ortfDirectionID, 
+      ORTFTypeID: ortfTypeID, RequestedDate:requestedDate, 
+      JIRATicket: jiraTicket,
+      newFlag: new_flag
+    });
+  }  
 }

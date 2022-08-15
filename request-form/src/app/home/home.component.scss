@@ -1,0 +1,88 @@
+body {
+    text-align: center;
+  }
+  
+  body > * {
+    text-align: left;
+  }
+  
+  form {
+    display: inline-block;
+  }
+  
+  h1 {
+    align-items: center;
+  }
+  
+  // form.ng-untouched.ng-pristine.ng-invalid {
+  //     display: inline-block;
+  //     text-align: left;
+  // }
+  
+  // .mat-form-field {
+  //     margin: 40px 0;
+  //     width: 500px !important;
+  // }
+  
+  // .mat-toolbar-single-row {
+  //     height: auto !important;
+  //     background: transparent;
+  // }
+  
+  // .mat-toolbar-single-row button {
+  //     width: 200px;
+  // }
+  
+  // .mat-form-field {
+  //     width: 100%;
+  // }
+  
+  #uploadFile {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 9;
+    opacity: 0;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+  }
+  
+  .pp-label {
+    ::ng-deep .mat-grid-tile-content {
+      justify-content: start;
+      align-items: start;
+      margin: 1rem;
+    }
+  }
+  
+  .pp-form {
+    ::ng-deep .mat-grid-tile-content {
+      justify-content: start;
+      align-items: start;
+      margin: 1rem;
+    }
+  }
+  
+  .pp-table {
+    ::ng-deep .mat-grid-tile-content {
+      justify-content: start;
+      align-items: flex-start;
+      flex-direction: column;
+      margin: 1rem;
+  
+      td,
+      th {
+          padding: 0 1rem;
+          text-align: center;
+      }
+  
+      thead {
+          // background-color: cornflowerblue; TODO: change it if needed
+      }
+    }
+  }
+  
+  mat-divider {
+      margin: 0.3rem 0;
+  }

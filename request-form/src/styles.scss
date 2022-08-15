@@ -2,3 +2,49 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+mat-grid-tile.mat-grid-tile.pp-table {
+    
+    left: 0px;
+    width: calc((25% - 0.75px) * 4 + 3px);
+    top: calc(550px) !important;
+    height: calc(500px);
+}
+
+mat-grid-tile.mat-grid-tile.pp-form {
+    overflow: unset !important;
+    top: 100px !important;
+}
+
+.mat-grid-tile {
+     display: unset !important; 
+     position: unset !important; 
+     overflow: unset  !important   ; 
+}
+.mat-grid-tile-content {
+    /* top: 0; 
+    /* left: 0; */
+    /* right: 0; */
+    /* bottom: 0; */
+     position: unset !important; 
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    /* height: 100%; */
+    padding: 0;
+    margin: 0;
+    /* width: 100%; */
+    height: fit-content;
+}
+
+h1[_ngcontent-aqu-c163] {
+    text-align: center !important;
+    width: 100%;
+}
+
+h1 {
+    /* align-items: center; */
+    text-align: center !important;
+    width: 100%;
+}
