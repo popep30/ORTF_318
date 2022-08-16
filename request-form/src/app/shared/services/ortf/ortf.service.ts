@@ -42,8 +42,12 @@ export class OrtfService {
     return of(this.mockData);
   }
 
-  getUploadUrl(model: any, isParsedFile: boolean): Observable<any> {
-    return this.http.post<any>(`https://q7w3dg24tk.execute-api.us-east-1.amazonaws.com/dev/upload`, {fileName:model, isParsedFile});
+  getUploadUrl(fileName: string, isParsedFile: boolean): Observable<any> {
+    return this.http.post<any>(`https://q7w3dg24tk.execute-api.us-east-1.amazonaws.com/dev/upload`, {fileName, isParsedFile});
+  }
+
+  getDownloadUrl(fileName: string, isParsedFile: boolean): Observable<any> {
+    return this.http.post<any>(`https://q7w3dg24tk.execute-api.us-east-1.amazonaws.com/dev/upload`, {fileName, isParsedFile, isDownload: true});
   }
 
   getClients(): Observable<any> {
